@@ -18,6 +18,7 @@ import twitter4j._
 import collection.JavaConversions._
 import java.net.URL
 import scala.xml._
+import com.github.nscala_time.time.Imports._
 
 trait TwitterInstance {
   val twitter = new TwitterFactory().getInstance
@@ -36,11 +37,11 @@ object RadioTracker extends TwitterInstance {
   }
 
   def main(args: Array[String]) {
-    var currentDJ: String = ""
-    var tempDJ: String = ""
+    var currentDJ: Seq[String] = Seq("","")
+    var tempDJ: Seq[String] = Seq("","")
 
-    println("R/a/dio Bot booting up......")
-    update("R/a/dio Bot booting up......")
+    println("R/a/dio Bot booting up at " + LocalTime.now + " EST.")
+    update("R/a/dio Bot booting up at " + LocalTime.now + " EST.")
 
     while (true) {
       try {
@@ -56,13 +57,13 @@ object RadioTracker extends TwitterInstance {
     }
   }
 
-  def updateDJ(): String = {
+  def updateDJ(): Seq[String] = {
     val current = (xml \\ "item")(0)
-    (current \\ "title").text
+    Seq( (current \\ "title").text, (current \\ "pubDate").text )
   }
 
-  def printDJ(dj: String) {
-    println(dj + "\n -------------------------")
-    update(dj)
+  def printDJ(info: Seq[String]) {
+    println(info.mkString(" ") + "\n -------------------------")
+    update(info.mkString(" "))
   }
 }
