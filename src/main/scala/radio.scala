@@ -22,8 +22,7 @@ object RadioTracker extends TwitterInstance {
     var tempDJ: String = ""
 
     println("R/a/dio Bot booting up......")
-    update("R/a/dio Bot booting up......"
-         )
+    update("R/a/dio Bot booting up......")
 
     while (true) {
       try {
