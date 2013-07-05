@@ -29,9 +29,11 @@ trait TwitterInstance {
 
 object RadioTracker extends TwitterInstance {
 
-  val urlStr = "http://r-a-dio.ackwell.com.au/dj/rss"
-  val url = new URL(urlStr)
-  val xml = XML.load(url.openConnection.getInputStream)
+  def xml(): Elem = {
+    val urlStr = "http://r-a-dio.ackwell.com.au/dj/rss"
+    val url = new URL(urlStr)
+    XML.load(url.openConnection.getInputStream)
+  }
 
   def main(args: Array[String]) {
     var currentDJ: String = ""
